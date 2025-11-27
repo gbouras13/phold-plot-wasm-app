@@ -32,11 +32,11 @@
   </style>
 </head>
 <body>
-  <h1>phold_plots — browser (Pyodide)</h1>
+  <h1>phold plot web assembly app</h1>
 
   <p>
     Upload a GenBank (.gbk / .gb) file, tweak options and click <strong>Install & Run</strong>.
-    This runs everything client-side using Pyodide (Biopython + pyCirclize + matplotlib).
+    This runs <strong>phold plot</strong> client-side using Pyodide (Biopython + pyCirclize + matplotlib). No data leaves your machine.
   </p>
 
   <fieldset>
@@ -47,7 +47,7 @@
   </fieldset>
 
   <fieldset>
-    <legend><strong>Plot options (these mirror your click options)</strong></legend>
+    <legend><strong>Plot options</strong></legend>
 
     <div class="inline">
       <label for="prefix">Prefix</label>
@@ -105,7 +105,7 @@
       <label class="inline" style="margin-left:1rem;">
         <input id="fmtSvg" type="checkbox" /> SVG (.svg)
       </label>
-      <div class="small">Choose one or both. If both are selected you'll get PNG + SVG (current behaviour).</div>
+      <div class="small">Choose one or both. If both are selected you'll get PNG + SVG.</div>
     </div>
 
   </fieldset>
@@ -297,7 +297,7 @@ def create_one_plot(contig_id):
     seq_len = seqid2size[contig_id]
     circos = Circos(sectors={contig_id: seq_len})
     title_to_use = opts.get("plotTitle") or contig_id
-    circos.text(title_to_use, size=int(opts.get("titleSize",20)), r=190)
+    circos.text(title_to_use, size=int(opts.get("titleSize",20)), r=205)
     sector = circos.get_sector(contig_id)
     cds_track = sector.add_track((70,80))
     cds_track.axis(fc="#EEEEEE", ec="none")
@@ -501,10 +501,10 @@ def create_one_plot(contig_id):
     phrog_legend = circos.ax.legend(
         handles=handle_phrogs,
         title="PHROG CDS",
-        fontsize=8.5,
+        fontsize=8,
         handlelength=1.8,
         frameon=False,
-        bbox_to_anchor=(-0.20, 1.38),
+        bbox_to_anchor=(-0.05, 1.38),
         loc="upper left",
     )
     
@@ -545,7 +545,7 @@ def create_one_plot(contig_id):
     gc_legend = circos.ax.legend(
         handles=combined_handles,
         title="Other Features",
-        fontsize=8.5,
+        fontsize=8,
         frameon=False,
         handlelength=1.5,
         bbox_to_anchor=(0.70, 1.38),
