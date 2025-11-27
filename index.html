@@ -481,6 +481,9 @@ def create_one_plot(contig_id):
         bbox_to_anchor=(0.10, 1.38),
         loc="upper left",
     )
+    
+    # Set the legend title to left alignment
+    phrog_legend.get_title().set_ha("left")
 
     circos.ax.add_artist(phrog_legend)
 
