@@ -297,7 +297,7 @@ def create_one_plot(contig_id):
     seq_len = seqid2size[contig_id]
     circos = Circos(sectors={contig_id: seq_len})
     title_to_use = opts.get("plotTitle") or contig_id
-    circos.text(title_to_use, size=int(opts.get("titleSize",20)), r=205)
+    circos.text(title_to_use, size=int(opts.get("titleSize",20)), r=215)
     sector = circos.get_sector(contig_id)
     cds_track = sector.add_track((70,80))
     cds_track.axis(fc="#EEEEEE", ec="none")
@@ -502,9 +502,9 @@ def create_one_plot(contig_id):
         handles=handle_phrogs,
         title="PHROG CDS",
         fontsize=8,
-        handlelength=1.8,
+        handlelength=1.7,
         frameon=False,
-        bbox_to_anchor=(-0.05, 1.44),
+        bbox_to_anchor=(-0.08, 1.44),
         loc="upper left",
     )
     
@@ -548,7 +548,7 @@ def create_one_plot(contig_id):
         fontsize=8,
         frameon=False,
         handlelength=1.5,
-        bbox_to_anchor=(0.70, 1.44),
+        bbox_to_anchor=(0.73, 1.44),
         loc="upper left",
     )
 
