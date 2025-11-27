@@ -469,8 +469,6 @@ def create_one_plot(contig_id):
               label="VF / AMR / ACR / DF"),
     ]
 
-    fig = circos.plotfig()
-
     # Position above the plot (works well in Pyodide)
     phrog_legend = circos.ax.legend(
         handles=handle_phrogs,
@@ -525,7 +523,6 @@ def create_one_plot(contig_id):
     )
 
     circos.ax.add_artist(gc_legend)
-
 
 
     fig = circos.plotfig()
