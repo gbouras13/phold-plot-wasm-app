@@ -210,6 +210,8 @@ with open(gbk_path, "w", encoding="utf-8") as fh:
 # imports
 import numpy as np
 import matplotlib
+from matplotlib.patches import Patch
+from matplotlib.lines import Line2D
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
@@ -446,6 +448,85 @@ def create_one_plot(contig_id):
     skew_track = sector.add_track((25, 42.5))
     skew_track.fill_between(pos_skew, positive_skew, 0, vmin=-abs_max_skew, vmax=abs_max_skew, color="green")
     skew_track.fill_between(pos_skew, negative_skew, 0, vmin=-abs_max_skew, vmax=abs_max_skew, color="purple")
+
+    ################################
+    # PHROG legend
+    ################################
+
+    handle_phrogs = [
+        Patch(color=data_dict["unk"]["col"], label="Unknown Function"),
+        Patch(color=data_dict["other"]["col"], label="Other Function"),
+        Patch(color=data_dict["transcription"]["col"], label="Transcription Regulation"),
+        Patch(color=data_dict["dna"]["col"], label="DNA/RNA & nucleotide metabolism"),
+        Patch(color=data_dict["lysis"]["col"], label="Lysis"),
+        Patch(color=data_dict["moron"]["col"],
+              label="Moron / AMG / host takeover"),
+        Patch(color=data_dict["int"]["col"], label="Integration & excision"),
+        Patch(color=data_dict["head"]["col"], label="Head & packaging"),
+        Patch(color=data_dict["con"]["col"], label="Connector"),
+        Patch(color=data_dict["tail"]["col"], label="Tail"),
+        Patch(color=data_dict["acr_defense_vfdb_card"]["col"],
+              label="VF / AMR / ACR / DF"),
+    ]
+
+    fig = circos.plotfig()
+
+    # Position above the plot (works well in Pyodide)
+    phrog_legend = circos.ax.legend(
+        handles=handle_phrogs,
+        title="PHROG CDS",
+        fontsize=9,
+        handlelength=1.8,
+        frameon=False,
+        bbox_to_anchor=(0.10, 1.18),
+        loc="upper left",
+    )
+
+    circos.ax.add_artist(phrog_legend)
+
+
+    ################################
+    # GC content / GC skew legend
+    ################################
+
+    handle_gc_content = [
+        Line2D([], [], color="black", label="Positive GC Content",
+              marker="^", ms=6, ls="None"),
+        Line2D([], [], color="grey", label="Negative GC Content",
+              marker="v", ms=6, ls="None"),
+    ]
+
+    handle_gc_skew = [
+        Line2D([], [], color="green", label="Positive GC Skew",
+              marker="^", ms=6, ls="None"),
+        Line2D([], [], color="purple", label="Negative GC Skew",
+              marker="v", ms=6, ls="None"),
+    ]
+
+    handle_other_features = [
+        Patch(color=extras_col, label="tRNA / tmRNA / CRISPR")
+    ]
+
+    # Combine all handles into one small legend
+    combined_handles = (
+        handle_gc_content +
+        handle_gc_skew +
+        handle_other_features
+    )
+
+    gc_legend = circos.ax.legend(
+        handles=combined_handles,
+        title="Other Features",
+        fontsize=9,
+        frameon=False,
+        handlelength=1.5,
+        bbox_to_anchor=(0.70, 1.18),
+        loc="upper left",
+    )
+
+    circos.ax.add_artist(gc_legend)
+
+
 
     fig = circos.plotfig()
     out_dir = tmp_dir / opts.get("outputDir","phold_plots")
