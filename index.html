@@ -454,7 +454,7 @@ def create_one_plot(contig_id):
 
     # compute GC content & skew with sliding windows
     contig_seq = rec.seq
-    pos_gc, gc_vals = sliding_gc(contig_seq, window=100)
+    pos_gc, gc_vals = sliding_gc(contig_seq, window=10)
     # normalize gc to percent difference from mean
     mean_gc = np.mean(gc_vals) if len(gc_vals)>0 else 0.0
     gc_vals_rel = gc_vals - mean_gc
@@ -466,7 +466,7 @@ def create_one_plot(contig_id):
     gc_track.fill_between(pos_gc, positive_gc, 0, vmin=-abs_max_gc, vmax=abs_max_gc, color="black")
     gc_track.fill_between(pos_gc, negative_gc, 0, vmin=-abs_max_gc, vmax=abs_max_gc, color="grey")
 
-    pos_skew, skew_vals = sliding_gc_skew(contig_seq, window=100)
+    pos_skew, skew_vals = sliding_gc_skew(contig_seq, window=10)
     pos_skew = list(pos_skew)
     positive_skew = np.where(skew_vals>0, skew_vals, 0)
     negative_skew = np.where(skew_vals<0, skew_vals, 0)
@@ -501,10 +501,10 @@ def create_one_plot(contig_id):
     phrog_legend = circos.ax.legend(
         handles=handle_phrogs,
         title="PHROG CDS",
-        fontsize=9,
+        fontsize=8.5,
         handlelength=1.8,
         frameon=False,
-        bbox_to_anchor=(0.00, 1.38),
+        bbox_to_anchor=(-0.20, 1.38),
         loc="upper left",
     )
     
@@ -545,7 +545,7 @@ def create_one_plot(contig_id):
     gc_legend = circos.ax.legend(
         handles=combined_handles,
         title="Other Features",
-        fontsize=9,
+        fontsize=8.5,
         frameon=False,
         handlelength=1.5,
         bbox_to_anchor=(0.70, 1.38),
