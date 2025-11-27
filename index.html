@@ -432,7 +432,7 @@ def create_one_plot(contig_id):
         labels,
         label_orientation="vertical",
         show_bottom_line=True,
-        label_size=label_size,
+        label_size=int(opts.get("labelSize",8),
         line_kws=dict(ec="grey"),
     )
 
