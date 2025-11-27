@@ -426,6 +426,18 @@ def create_one_plot(contig_id):
     # xticks by interval
     cds_track.xticks_by_interval(interval=int(opts.get("interval",5000)), outer=False, show_bottom_line=False, label_formatter=lambda v: f"{v/1000:.0f} Kb", label_orientation="vertical", line_kws=dict(ec="grey"), label_size=int(opts.get("labelSize",8)))
 
+    # Plot CDS product labels on outer position
+    cds_track.xticks(
+        pos_list,
+        labels,
+        label_orientation="vertical",
+        show_bottom_line=True,
+        label_size=label_size,
+        line_kws=dict(ec="grey"),
+    )
+
+
+
     # compute GC content & skew with sliding windows
     contig_seq = rec.seq
     pos_gc, gc_vals = sliding_gc(contig_seq, window=100)
