@@ -38,6 +38,7 @@
     Upload a GenBank (.gbk / .gb) file, tweak options and click <strong>Run</strong>.
     This runs <strong>phold plot</strong>.
     See the phold main repository for more details at <a href="https://github.com/gbouras13/phold" target="_blank">GitHub</a>.
+    
     <strong>phold plot</strong> is run client-side using Wasm (WebAssembly) with Pyodide (Biopython + pyCirclize + matplotlib).
     No data leaves your machine.
   </p>
@@ -177,7 +178,7 @@
 
       const opts = {
         prefix: document.getElementById("prefix").value || "phold",
-        outputDir: document.getElementById("outputDir").value || "phold_plots",
+        outputDir: "phold_plots",
         allContigs: document.getElementById("allContigs").checked,
         labelHyp: document.getElementById("labelHyp").checked,
         removeOther: document.getElementById("removeOther").checked,
