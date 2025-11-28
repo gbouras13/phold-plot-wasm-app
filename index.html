@@ -166,6 +166,21 @@
       log("Package installation step complete.");
     }
 
+
+    exampleBtn.addEventListener("click", async () => {
+      statusEl.textContent = "Loading example GBK from data/NC_043029_phold_output.gbk...";
+      try {
+        const resp = await fetch("data/NC_043029_phold_output.gbk");
+        const text = await resp.text();
+
+        // re-use same plotting function
+        await runPhold(text);
+      } catch (err) {
+        log("Error loading example file: " + err);
+        statusEl.textContent = "Error loading example GBK";
+      }
+    });
+
     runBtn.addEventListener("click", async () => {
       const file = fileInput.files[0];
       if (!file) {
@@ -173,18 +188,6 @@
         return;
       }
 
-
-    exampleBtn.addEventListener("click", async () => {
-      statusEl.textContent = "Loading example GBK from data/NC_043029_phold_output.gbk...";
-      try {
-        const resp = await fetch("data/NC_043029_phold_output.gbk");
-        const text = await resp.text();
-        await runPhold(text);
-      } catch (err) {
-        log("Error loading example file: " + err);
-        statusEl.textContent = "Error loading example GBK";
-      }
-    });
 
       runBtn.disabled = true;
       exampleBtn.disabled = true;
