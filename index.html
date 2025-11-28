@@ -73,7 +73,7 @@
       <label for="titleSize">Title size</label>
       <input id="titleSize" type="number" value="20" min="6" />
       <label style="margin-left:1rem">Label size</label>
-      <input id="labelSize" type="number" value="8" min="4" />
+      <input id="labelSize" type="number" value="6.5" min="4" />
     </div>
 
     <div style="margin-top:.5rem">
@@ -184,7 +184,7 @@
         removeOther: document.getElementById("removeOther").checked,
         plotTitle: document.getElementById("plotTitle").value || null,
         titleSize: Number(document.getElementById("titleSize").value) || 20,
-        labelSize: Number(document.getElementById("labelSize").value) || 8,
+        labelSize: Number(document.getElementById("labelSize").value) || 6.5,
         interval: Number(document.getElementById("interval").value) || 5000,
         truncate: Number(document.getElementById("truncate").value) || 20,
         dpi: Number(document.getElementById("dpi").value) || 600,
@@ -439,7 +439,7 @@ def create_one_plot(contig_id):
         labels = [labels[i] for i in idx_sorted]
 
     # xticks by interval
-    cds_track.xticks_by_interval(interval=int(opts.get("interval",5000)), outer=False, show_bottom_line=False, label_formatter=lambda v: f"{v/1000:.0f} Kb", label_orientation="vertical", line_kws=dict(ec="grey"), label_size=int(opts.get("labelSize",6)))
+    cds_track.xticks_by_interval(interval=int(opts.get("interval",5000)), outer=False, show_bottom_line=False, label_formatter=lambda v: f"{v/1000:.0f} Kb", label_orientation="vertical", line_kws=dict(ec="grey"), label_size=int(opts.get("labelSize",6.5)))
 
     # Plot CDS product labels on outer position
     cds_track.xticks(

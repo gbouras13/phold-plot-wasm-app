@@ -1,4 +1,6 @@
-# Pyodide Bioinformatics Demo
+# `phold plot` Wasm App
+
+Please go to [https://gbouras13.github.io/phold-plot-wasm-app/](https://gbouras13.github.io/phold-plot-wasm-app/) to produce phage genomic maps using `phold plot` in your broswer.
 
 This app runs `phold plot` entirely in your browser using Wasm with Pyodide - no data ever leaves your machine.
 
