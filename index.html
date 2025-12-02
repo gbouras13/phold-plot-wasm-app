@@ -354,6 +354,8 @@
                         data_dict["int"]["fwd_list"].append(feat)
                     elif "head" in func:
                         data_dict["head"]["fwd_list"].append(feat)
+                    elif "connector" in func:
+                        data_dict["con"]["fwd_list"].append(feat)
                     else:
                         data_dict["other"]["fwd_list"].append(feat)
 
@@ -378,6 +380,8 @@
                         data_dict["moron"]["rev_list"].append(feat)
                     elif "integration" in func:
                         data_dict["int"]["rev_list"].append(feat)
+                    elif "connector" in func:
+                        data_dict["con"]["rev_list"].append(feat)
                     elif "head" in func:
                         data_dict["head"]["rev_list"].append(feat)
                     else:
