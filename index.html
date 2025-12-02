@@ -455,7 +455,11 @@
 
         # compute GC content & skew with sliding windows
         contig_seq = rec.seq
-        pos_gc, gc_vals = sliding_gc(contig_seq, window=10)
+
+        # to match the default in pycirclize
+        window_size = int(len(contig_seq) / 500)
+
+        pos_gc, gc_vals = sliding_gc(contig_seq, window=window_size)
         # normalize gc to percent difference from mean
         mean_gc = np.mean(gc_vals) if len(gc_vals)>0 else 0.0
         gc_vals_rel = gc_vals - mean_gc
@@ -467,7 +471,7 @@
         gc_track.fill_between(pos_gc, positive_gc, 0, vmin=-abs_max_gc, vmax=abs_max_gc, color="black")
         gc_track.fill_between(pos_gc, negative_gc, 0, vmin=-abs_max_gc, vmax=abs_max_gc, color="grey")
 
-        pos_skew, skew_vals = sliding_gc_skew(contig_seq, window=10)
+        pos_skew, skew_vals = sliding_gc_skew(contig_seq, window=window_size)
         pos_skew = list(pos_skew)
         positive_skew = np.where(skew_vals>0, skew_vals, 0)
         negative_skew = np.where(skew_vals<0, skew_vals, 0)
