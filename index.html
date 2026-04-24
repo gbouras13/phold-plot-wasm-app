@@ -13,7 +13,7 @@
   </script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;family=Space+Grotesk:wght@500;700&amp;display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Lexend:wght@500;600;700;800&amp;display=swap" rel="stylesheet" />
 
   <!-- Pyodide -->
   <script src="https://cdn.jsdelivr.net/pyodide/v0.29.0/full/pyodide.js"></script>
@@ -37,8 +37,8 @@
       --radius-xl: 30px;
       --radius-lg: 22px;
       --radius-md: 16px;
-      --font-display: "Space Grotesk", "Avenir Next", "Segoe UI", sans-serif;
-      --font-body: "Manrope", "Segoe UI", sans-serif;
+      --font-display: "Lexend", "Avenir Next", "Segoe UI", sans-serif;
+      --font-body: "Plus Jakarta Sans", "Segoe UI", sans-serif;
       --page-bg:
         radial-gradient(circle at 0% 0%, rgba(8, 182, 232, 0.22), transparent 24%),
         radial-gradient(circle at 85% 10%, rgba(11, 125, 167, 0.24), transparent 18%),
@@ -212,10 +212,10 @@
 
     .hero {
       display: grid;
-      grid-template-columns: 1fr;
-      gap: 1.25rem;
+      grid-template-columns: minmax(0, 1fr) clamp(122px, 12vw, 168px);
+      gap: 2rem;
       padding: 1.75rem;
-      align-items: stretch;
+      align-items: start;
     }
 
     .hero-copy,
@@ -234,6 +234,7 @@
       gap: 1.25rem;
       justify-content: center;
       padding: 0.25rem 0;
+      min-width: 0;
     }
 
     .page-topbar {
@@ -397,8 +398,30 @@
     }
 
     .hero-visual {
-      min-height: 360px;
       display: flex;
+      align-items: flex-start;
+      justify-content: flex-end;
+      align-self: stretch;
+    }
+
+    .hero-logo-strip {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      justify-content: flex-end;
+      gap: 0.9rem;
+      width: 100%;
+      min-height: 100%;
+      padding-top: 0.15rem;
+    }
+
+    .hero-logo {
+      display: block;
+      width: 100%;
+      max-width: 168px;
+      max-height: 76px;
+      height: auto;
+      object-fit: contain;
     }
 
     .mesh-card {
@@ -858,7 +881,6 @@
     }
 
     @media (max-width: 1120px) {
-      .hero,
       .config-grid,
       .support-grid {
         grid-template-columns: 1fr;
@@ -874,6 +896,32 @@
 
       .mesh-wordmark {
         max-width: none;
+      }
+    }
+
+    @media (max-width: 900px) {
+      .hero {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+
+      .hero-visual {
+        justify-content: flex-start;
+      }
+
+      .hero-logo-strip {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 1rem;
+        min-height: auto;
+        width: 100%;
+      }
+
+      .hero-logo {
+        width: clamp(88px, 26vw, 120px);
+        max-height: 64px;
       }
     }
 
@@ -951,11 +999,18 @@
         <h1>Phold Plot WebAssembly App</h1>
         <p class="hero-text">
           <strong>phold plot</strong> is run client-side using Wasm (WebAssembly) with Pyodide (Biopython + pyCirclize + matplotlib): no data leaves your machine.<br><br>
-          Upload a GenBank (.gbk) file either from <a href="https://github.com/gbouras13/pharokka" target="_blank" rel="noreferrer">Pharokka</a>, <a href="https://github.com/gbouras13/phold" target="_blank" rel="noreferrer">Phold</a> or <a href="https://github.com/susiegriggo/Phynteny_transformer" target="_blank" rel="noreferrer">Phynteny</a>, tweak your options and click <strong>Run</strong>. This will run <strong>phold plot</strong>.<br>
+          Upload a GenBank (.gbk) file either from <a href="https://github.com/gbouras13/pharokka" target="_blank" rel="noreferrer"><b>Pharokka</b></a>, <a href="https://github.com/gbouras13/phold" target="_blank" rel="noreferrer"><b>Phold</b></a> or <a href="https://github.com/susiegriggo/Phynteny_transformer" target="_blank" rel="noreferrer"><b>Phynteny</b></a>, tweak your options and click <strong>Run</strong>. This will run <strong>phold plot</strong>.<br>
           For more details about the parameters, please see phold's <a href="https://phold.readthedocs.io/en/latest/run/" target="_blank" rel="noreferrer">documentation</a>.<br><br>
           You can also try the Example button for a pre-loaded example phage.<br>
           If you encounter any problems, please leave an issue on <a href="https://github.com/gbouras13/phold-plot-wasm-app" target="_blank" rel="noreferrer">GitHub</a>.<br>
         </p>
+      </div>
+      <div class="hero-visual" aria-label="Associated project logos">
+        <div class="hero-logo-strip">
+          <img class="hero-logo" src="https://raw.githubusercontent.com/gbouras13/pharokka/master/img/pharokka_logo.png" alt="Pharokka logo" />
+          <img class="hero-logo" src="https://raw.githubusercontent.com/gbouras13/phold/main/img/phold_logo.png" alt="Phold logo" />
+          <img class="hero-logo" src="https://raw.githubusercontent.com/susiegriggo/Phynteny_transformer/main/phynteny_logo.png" alt="Phynteny logo" />
+        </div>
       </div>
     </header>
 
