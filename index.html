@@ -559,6 +559,8 @@
     .status {
       margin: 0;
       color: var(--muted);
+      font-size: 0.95rem;
+      line-height: 1.45;
     }
 
     fieldset {
@@ -681,8 +683,9 @@
       line-height: 1.5;
     }
 
-    .status-card {
-      display: none;
+    .hero-status {
+      margin-top: -0.15rem;
+      min-height: 1.45em;
     }
 
     .status-pill {
@@ -1108,13 +1111,9 @@
         <button id="exampleBtn" class="btn btn-secondary">Example</button>
         <button id="clearBtn" class="btn btn-ghost">Clear results</button>
       </div>
+      <p class="status hero-status reveal" id="status" role="status" aria-live="polite">Pyodide will be loaded on demand when you click <strong>Run</strong>.</p>
 
       <section class="support-grid">
-        <div class="status-card panel reveal">
-          <span class="status-pill" id="statusBadge" data-state="neutral" aria-hidden="true"></span>
-          <p class="status" id="status" role="status" aria-live="polite">Pyodide will be loaded on demand when you click <strong>Run</strong>.</p>
-        </div>
-
         <div class="logs-card panel reveal">
           <div class="section-header">
             <h2>Logs</h2>
@@ -1138,7 +1137,6 @@
     const exampleBtn = document.getElementById("exampleBtn");
     const clearBtn = document.getElementById("clearBtn");
     const statusEl = document.getElementById("status");
-    const statusBadgeEl = document.getElementById("statusBadge");
     const logEl = document.getElementById("log");
     const imagesEl = document.getElementById("images");
     const fileInput = document.getElementById("fileInput");
@@ -1185,7 +1183,6 @@
 
     function setStatus(message, tone = "neutral") {
       statusEl.innerHTML = message;
-      statusBadgeEl.dataset.state = tone;
     }
 
     function setBusy(isBusy) {
