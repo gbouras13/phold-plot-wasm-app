@@ -830,16 +830,16 @@
     }
 
     .download-link {
-      align-self: flex-start;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      align-self: center;
+      min-width: 9.5rem;
       text-decoration: none;
-      border-bottom: 1px solid var(--link-border);
-      color: var(--text);
-      padding-bottom: 0.16rem;
     }
 
     .download-link:hover {
-      color: var(--brand-bright);
-      border-color: var(--brand-bright);
+      color: #02212c;
     }
 
     .reveal {
@@ -1733,7 +1733,7 @@
           stage.className = "img-stage";
           stage.appendChild(img);
           const dlLink = document.createElement("a");
-          dlLink.className = "download-link";
+          dlLink.className = "btn btn-primary download-link";
           dlLink.href = url;
           dlLink.download = filename;
           dlLink.textContent = "Download";
