@@ -457,7 +457,7 @@
         rev = [f for f in features if getattr(f.location, "strand", 1) == -1]
         cds_features = [f for f in features if f.type == "CDS"]
         trna_features = [f for f in features if f.type == "tRNA"]
-        tmrna_features = [f for f in features if f.type in ("tmRNA","tm-RNA","tmRNA")]
+        tmrna_features = [f for f in features if f.type in ("tmRNA","tm-RNA")]
         crispr_features = [f for f in features if f.type in ("repeat_region","CRISPR")]
 
         # basic data_dict as before
@@ -542,12 +542,25 @@
             cds_track.genomic_features(data_dict[key]["fwd_list"], plotstyle="arrow", r_lim=(75,80), fc=data_dict[key]["col"])
             cds_track.genomic_features(data_dict[key]["rev_list"], plotstyle="arrow", r_lim=(70,75), fc=data_dict[key]["col"])
 
-        # extras
+        # extras: tRNA / tmRNA / CRISPR (the legend below promises all three).
+        # Honour the "Remove tRNA/tmRNA/CRISPR labels" toggle — when set, skip
+        # both the tracks and the corresponding legend patch further down.
         extras_col = "black"
-        fwd_ex = [f for f in fwd if f.type in ("tRNA","tmRNA")]
-        rev_ex = [f for f in rev if f.type in ("tRNA","tmRNA")]
-        cds_track.genomic_features(fwd_ex, plotstyle="arrow", r_lim=(75,80), fc=extras_col)
-        cds_track.genomic_features(rev_ex, plotstyle="arrow", r_lim=(70,75), fc=extras_col)
+        show_extras = not opts.get("removeOther", False)
+        # Collect extras from the full feature list (not fwd/rev) so we can
+        # route strandless features (strand 0/None, common on repeat_region)
+        # to the forward track instead of silently dropping them.
+        extras_types = ("tRNA", "tmRNA", "repeat_region", "CRISPR")
+        fwd_ex, rev_ex = [], []
+        if show_extras:
+            for f in features:
+                if f.type in extras_types:
+                    if getattr(f.location, "strand", 1) == -1:
+                        rev_ex.append(f)
+                    else:
+                        fwd_ex.append(f)
+            cds_track.genomic_features(fwd_ex, plotstyle="arrow", r_lim=(75,80), fc=extras_col)
+            cds_track.genomic_features(rev_ex, plotstyle="arrow", r_lim=(70,75), fc=extras_col)
 
         # prepare CDS labels
         pos_list = []
@@ -580,15 +593,27 @@
                 pos_list.append(pos); labels.append(label); length_list.append(length); id_list.append(fid)
 
         # thin annotations by 'annotations' proportion
+        # Semantics: 0 -> no labels, 1 -> all labels, 0.5 -> top half by CDS
+        # length. Forced labels in `label_force_list` are ALWAYS honoured,
+        # regardless of the threshold (mirrors the upstream phold plot fix).
         ann_prop = float(opts.get("annotations",1.0))
-        if ann_prop <= 0:
-            pos_list = []; labels = []
-        elif ann_prop < 1.0 and len(length_list) > 0:
-            k = max(1, int(len(length_list) * ann_prop))
-            idx_sorted = sorted(range(len(length_list)), key=lambda i: -length_list[i])[:k]
-            idx_sorted.sort()
-            pos_list = [pos_list[i] for i in idx_sorted]
-            labels = [labels[i] for i in idx_sorted]
+        if len(length_list) > 0:
+            if ann_prop <= 0:
+                # Only forced labels survive.
+                keep = [i for i, fid in enumerate(id_list) if fid in label_force_list]
+                pos_list = [pos_list[i] for i in keep]
+                labels = [labels[i] for i in keep]
+            elif ann_prop < 1.0:
+                k = max(1, int(len(length_list) * ann_prop))
+                top_k = set(sorted(range(len(length_list)), key=lambda i: -length_list[i])[:k])
+                # Union with forced labels so they're never dropped.
+                keep = sorted(
+                    i for i in range(len(length_list))
+                    if i in top_k or id_list[i] in label_force_list
+                )
+                pos_list = [pos_list[i] for i in keep]
+                labels = [labels[i] for i in keep]
+            # ann_prop >= 1.0: keep everything (no thinning)
 
         # xticks by interval
         cds_track.xticks_by_interval(interval=int(opts.get("interval",5000)), outer=False, show_bottom_line=False, label_formatter=lambda v: f"{v/1000:.0f} Kb", label_orientation="vertical", line_kws=dict(ec="grey"), label_size=int(opts.get("labelSize",6.5)))
@@ -687,9 +712,12 @@
                   marker="v", ms=6, ls="None"),
         ]
 
-        handle_other_features = [
-            Patch(color=extras_col, label="tRNA / tmRNA / CRISPR")
-        ]
+        # Only advertise the extras patch when we actually plotted them.
+        handle_other_features = []
+        if show_extras:
+            handle_other_features.append(
+                Patch(color=extras_col, label="tRNA / tmRNA / CRISPR")
+            )
 
         # Combine all handles into one small legend
         combined_handles = (
