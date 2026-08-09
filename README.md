@@ -1,5 +1,7 @@
 # `phold plot` Wasm App
 
+### 🌐 Also available at **[https://phage-annotation.org](https://phage-annotation.org)**
+
 **Works with Pharokka AND Phold AND Phynteny GenBank files**
 
 Please go to [https://gbouras13.github.io/phold-plot-wasm-app/](https://gbouras13.github.io/phold-plot-wasm-app/) to produce phage genomic maps using `phold plot` in your broswer.
@@ -18,6 +20,8 @@ It was an amazing and productive workshop - thanks to Wytamma, Torsten, Leo and 
 
 # Citation
 
-If you use this, please cite the Phold Manuscript (full citation below) and the  Wasm ABABCS2025 Workshop (doi: https://doi.org/10.5281/zenodo.17743837)
+If you use this, please cite the Phold Manuscript, the Pharokka/Phold/Phynteny Protocols paper (full citations below) and the Wasm ABABCS2025 Workshop (doi: https://doi.org/10.5281/zenodo.17743837)
 
 * Bouras G, Grigson SR, Mirdita M, Heinzinger M, Papudeshi B, Mallawaarachchi V, Green R, Kim SR, Mihalia V, Psaltis AJ, Wormald P-J, Vreugde S, Steinegger M, Edwards RA: "Protein Structure Informed Bacteriophage Genome Annotation with Phold" bioRxiv (2025) https://doi.org/10.1101/2025.08.05.668817
+
+* Bouras G., Grigson S.R., Durr L., Papudeshi B., Mallawaarachchi V., Vreugde S., Edwards R.A. "Decoding Viral Dark Matter: Metagenomic Prokaryotic Virus Characterization With Pharokka, Phold, and Phynteny" **Current Protocols**, Volume 6, Number 7, 6 July 2026, https://doi.org/10.1002/cpz1.70405
