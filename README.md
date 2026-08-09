@@ -1,6 +1,6 @@
 # `phold plot` Wasm App
 
-### 🌐 Also available at **[https://phage-annotation.org](https://phage-annotation.org)**
+### 🌐 Pharokka, Phold and Phynteny web-server available at **[https://phage-annotation.org](https://phage-annotation.org)**
 
 **Works with Pharokka AND Phold AND Phynteny GenBank files**
 
