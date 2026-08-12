@@ -594,7 +594,7 @@
 
         # thin annotations by 'annotations' proportion
         # Semantics: 0 -> no labels, 1 -> all labels, 0.5 -> top half by CDS
-        # length. Forced labels in `label_force_list` are ALWAYS honoured,
+        # length. Forced labels in label_force_list are ALWAYS honoured,
         # regardless of the threshold (mirrors the upstream phold plot fix).
         ann_prop = float(opts.get("annotations",1.0))
         if len(length_list) > 0:
